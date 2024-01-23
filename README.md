@@ -7,3 +7,8 @@ procedimento per stilare presentazione:
 - rinomina delle colonne (per aggiungere la colonna target)
 - sono stati mescolati i dati. Nella sua forma primaria il data contiene nella colonna "winner" (rinominata in "player_1") il vincitore. Mescoliamo i dati tra le due colonne dei giocatori per evitare che il "player_1" sia sempre riconosciuto come il vincitore (le relazione tra questa e le altre colonne vengono mantenute)
 - target contiene 0 -> vince giocatore 1,  1 -> vince giocatore 2
+
+....
+....
+
+- aggiungere curva ROC
