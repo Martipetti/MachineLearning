@@ -1,6 +1,14 @@
-Link kaggle import in python csv: https://www.kaggle.com/code/dissfya/atp-tennis-daily-pull/notebook
+# Progetto Machine Learning
 
-procedimento per stilare presentazione:
+## Membri
+- Martino Pettinari (Il rosso più bello d'Italia)
+- Davide Creati (Mi piace la ciola)
+
+## Dataset
+All'interno della cartella **Dataset parser** è presente un file python per creare i dataset da usare per allenare e testare i modelli (quelli operativi si trovano nella cartella **output**)
+
+## Spunti per relazione finale
+
 - eliminazione di alcune colonne inutili (spiegare perchè nè abbiamo eliminate alcune e tenute altre)
   - mantenuti i dati che possiamo sapere prima della partita
   - alcune colonne non sempre sono compilate e risulta inutile tenerle solo per alcune righe
