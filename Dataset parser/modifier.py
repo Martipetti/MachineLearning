@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 def rename_columns(df):
@@ -51,16 +52,43 @@ def filter_grand_slam(df):
 
     return filtered
 
+def manage_nulls(df):
+    df = df.apply(handle_nulls, axis=1, args=(df,))
+
+    cols_to_check = [
+        'tournament', 'surface', 'round', 
+        'player_1', 'player_2',
+        'player_1_bet365', 'player_2_bet365', 
+        'player_1_pinnacle', 'player_2_pinnacle'
+    ]
+    df = df.dropna(subset=cols_to_check)
+
+    return df
+
+def handle_nulls(row, df):
+    max_rank = df[['player_1_rank', 'player_2_rank']].max().max()
+    if pd.isnull(row['player_1_rank']):
+        row['player_1_rank'] = max_rank + 1
+    elif pd.isnull(row['player_2_rank']):
+        row['player_2_rank'] = max_rank + 1
+    
+    return row
+
 def keep_columns(df):
     cols_to_keep = [
         'tournament', 'surface', 'round', 
         'player_1', 'player_2', 'player_1_rank', 'player_2_rank', 
-        'player_1_winner_sets', 'player_2_winner_sets', 'player_1_bet365', 'player_2_bet365', 
+        'player_1_bet365', 'player_2_bet365', 
         'player_1_pinnacle', 'player_2_pinnacle'
     ]
 
     return df[cols_to_keep]
 
+def filter_test_df(train_df, test_df):
+    player_names = set(train_df['player_1'].tolist() + train_df['player_2'].tolist())
+    test_filtered = test_df[(test_df['player_1'].isin(player_names)) & (test_df['player_2'].isin(player_names))]
+
+    return test_filtered
 
 def add_winner_column(df):
     df['winner'] = 1
@@ -81,17 +109,29 @@ def swap_players(df):
     return df_new
 
 if __name__ == '__main__':
-    df = pd.read_csv('2023.csv')
+    csv_files = [f for f in os.listdir('./source/') if f.endswith('.csv')]
+    for file_name in csv_files:
+        df = pd.read_csv('./source/' + file_name)
 
-    # rename columns
-    renamed_df = rename_columns(df)
+        # rename columns
+        renamed_df = rename_columns(df)
 
-    filtered_df = filter_grand_slam(renamed_df) # hold only grand slam matches
-    keeped_df = keep_columns(filtered_df) # keep only a few columns
+        filtered_df = filter_grand_slam(renamed_df) # hold only grand slam matches
+        keeped_df = keep_columns(filtered_df) # keep only a few columns
 
-    # add target column
-    with_target_df = add_winner_column(keeped_df)
+        nullfree_df = manage_nulls(keeped_df)
 
-    swapped_df = swap_players(with_target_df)
+        # add target column
+        with_target_df = add_winner_column(nullfree_df)
 
-    swapped_df.to_csv('modified.csv')
+        swapped_df = swap_players(with_target_df)
+
+        swapped_df.to_csv('./output/modified_' + file_name, index=False)
+    
+
+    # post operations
+    train_df = pd.read_csv('./output/modified_train_2023.csv')
+    test_df = pd.read_csv('./output/modified_test_2024.csv')
+
+    new_test = filter_test_df(train_df, test_df) # delete player from test that dont appear in train
+    new_test.to_csv('./output/modified_test_2024.csv', index=False)
