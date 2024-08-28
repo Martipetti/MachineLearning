@@ -1,22 +1,15 @@
-# Progetto Machine Learning
+# Tennis match prediction
 
-## Membri
-- Martino Pettinari (Il rosso più bello d'Italia)
-- Davide Creati (Mi piace la ciola)
+This project focuses on predicting the outcomes of tennis matches using Machine Learning techniques, specifically neural networks and decision trees. We trained and evaluated various models on historical tennis match data, including player statistics, head-to-head records, and tournament details. The project involved extensive data preprocessing, model training, and optimization to improve predictive accuracy. By comparing the performance of different neural network architectures and decision tree models, we identified the most effective approaches for forecasting match results. The final models provide insights into potential applications in sports analytics and betting.
 
-## Dataset
-All'interno della cartella **Dataset parser** è presente un file python per creare i dataset da usare per allenare e testare i modelli (quelli operativi si trovano nella cartella **output**)
 
-## Spunti per relazione finale
+## Authors
 
-- eliminazione di alcune colonne inutili (spiegare perchè nè abbiamo eliminate alcune e tenute altre)
-  - mantenuti i dati che possiamo sapere prima della partita
-  - alcune colonne non sempre sono compilate e risulta inutile tenerle solo per alcune righe
-- rinomina delle colonne (per aggiungere la colonna target)
-- sono stati mescolati i dati. Nella sua forma primaria il data contiene nella colonna "winner" (rinominata in "player_1") il vincitore. Mescoliamo i dati tra le due colonne dei giocatori per evitare che il "player_1" sia sempre riconosciuto come il vincitore (le relazione tra questa e le altre colonne vengono mantenute)
-- target contiene 0 -> vince giocatore 1,  1 -> vince giocatore 2
+- [@Martino Pettinari](https://github.com/Martipetti)
+- [@Davide Creati](https://github.com/DCreaa)
 
-....
-....
 
-- aggiungere curva ROC
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
